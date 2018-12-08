@@ -32,3 +32,20 @@ class UserModelForm(forms.ModelForm):
         if commit:
             user.save()
         return user  
+
+
+class CarroModelForm(forms.ModelForm):
+    class Meta:
+        model = Carro
+        fields = '__all__'
+        widgets={
+            'modelo':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'ano_modelo':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'ano_fabricacao':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'nume_portas':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+        }
+
+class AcessorioModelForm(forms.ModelForm):
+    class Meta:
+        model = Acessorio
+        fields = '__all__'
