@@ -47,6 +47,8 @@ class CarroModelForm(forms.ModelForm):
             'nume_portas':forms.NumberInput(attrs={'class':'form-control'}),
             'descricao':forms.Textarea(attrs={'class':'form-control'}),
             'foto':forms.FileInput(attrs={'class':'form-control'}),
+            'preco':forms.NumberInput(attrs={'class':'form-control'}),
+            'acessorio':forms.CheckboxSelectMultiple(attrs={'class':'checkbox form-control'}),
         }
         error_messages = {
 	        'modelo':{
@@ -60,7 +62,7 @@ class CarroModelForm(forms.ModelForm):
 class AcessorioModelForm(forms.ModelForm):
     class Meta:
         model = Acessorio
-        fields = '__all__'
+        fields = ['nome']
         widgets={
-        'nome':forms.CheckboxInput(attrs={'class':'required checkbox form-control'})
+             'nome':forms.TextInput(attrs={'class':'form-control', 'maxlength':255})
         }
