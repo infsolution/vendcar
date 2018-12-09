@@ -37,15 +37,30 @@ class UserModelForm(forms.ModelForm):
 class CarroModelForm(forms.ModelForm):
     class Meta:
         model = Carro
-        fields = '__all__'
+        #fields = ['marca','modelo', 'ano_modelo', 'ano_fabricacao', 'nume_portas','foto']
+        exclude = ['user']
         widgets={
+        	'marca':forms.Select(attrs={'class':'form-control'}),
             'modelo':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
             'ano_modelo':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
             'ano_fabricacao':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
-            'nume_portas':forms.TextInput(attrs={'class':'form-control', 'maxlength':255}),
+            'nume_portas':forms.NumberInput(attrs={'class':'form-control'}),
+            'descricao':forms.Textarea(attrs={'class':'form-control'}),
+            'foto':forms.FileInput(attrs={'class':'form-control'}),
+        }
+        error_messages = {
+	        'modelo':{
+	        	'required':'Informe o modelo do veiculo!'
+	        },
+	        'ano_fabricacao':{
+	        	'required':'Informe o ano de fabricação do veiculo!'
+	        }
         }
 
 class AcessorioModelForm(forms.ModelForm):
     class Meta:
         model = Acessorio
         fields = '__all__'
+        widgets={
+        'nome':forms.CheckboxInput(attrs={'class':'required checkbox form-control'})
+        }

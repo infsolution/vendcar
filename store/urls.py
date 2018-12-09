@@ -10,6 +10,11 @@ urlpatterns = [
  	path('logout/',views.do_logout, name='logout'),
  	path('perfil/',views.get_perfil, name='perfil'),
  	path('add/',views.add_car, name='add'),
+ 	path('detalhes/<int:carro_id>', views.detalhes, name='detalhes'),
+ 	path('editar/<int:carro_id>',views.editar, name='editar'),
+ 	path('apagar/<int:carro_id>',views.apagar, name='apagar'),
+ 	path('comprar/<int:carro_id>', views.comprar, name='comprar'),
+ 	path('search/',views.search,name='search'),
 ]
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

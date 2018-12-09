@@ -17,23 +17,27 @@
               <p class="text-white">Aqui você pode comprar ou vender veiculos de todos os tipos, anos marcas e modelos</p>
             </div>
             <div class="col-sm-4 offset-md-1 py-4">
-              <h4 class="text-white">Contact</h4>
+                <form class="form-inline my-2 my-lg-0">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
               <ul class="list-unstyled">
                 {% if user.username %}
                 <li><a href="{% url 'add' %}" class="text-white">Venda seu veiculo</a></li>
                 {% else %}
                 <li><a href="{% url 'cadastro' %}" class="text-white">Cadastre-se</a></li>
                 {% endif %}
-                <li><a href="#" class="text-white">Like on Facebook</a></li>
                 {% if user.username %}
                 <li><a href="{% url 'logout' %}" class="text-white">Sair</a></li>
                 {% endif %}
+                
               </ul>
             </div>
           </div>
         </div>
       </div>
       <div class="navbar navbar-dark bg-dark shadow-sm">
+        <a href="{% url 'index' %}" class="text-white"><strong>Home</strong></a>
         <div class="container d-flex justify-content-between">
             {% if user.username %}
             <a href="{% url 'perfil' %}" class="navbar-brand d-flex align-items-center">
@@ -60,8 +64,8 @@
         <p class="float-right">
           <a href="#">Voltar ao topo</a>
         </p>
-        <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
+        <p> &copy;Vendcar, todos os direitos resevado.</p>
+        <p>Entre em contato <a href="#">aqui</a>.</p>
         </div>
     </footer>
     <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>

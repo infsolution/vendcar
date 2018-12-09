@@ -15,7 +15,7 @@ class Carro(models.Model):
 	ano_modelo = models.CharField(max_length=4)
 	ano_fabricacao = models.CharField(max_length=4)
 	nume_portas = models.IntegerField(default=2)
-	#descricao = models.TextField()
+	descricao = models.TextField(null=True, blank=True)
 	foto = models.ImageField(null=True, blank=True, upload_to = 'media/')
 	def __str__(self):
 		return self.modelo

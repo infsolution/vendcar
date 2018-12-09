@@ -8,15 +8,15 @@
 {% for carro in carros %}
   <div class="col-md-4">
     <div class="card mb-4 shadow-sm">
-      <img class="card-img-top" src="{{carro.foto}}" alt="Card image cap">
+      <img class="card-img-top" src="{{carro.foto}}" alt="{{carro.modelo}}">
       <div class="card-body">
-        <p class="card-text">{{ carro.modelo }}.</p>
+        <p class="card-text">{{ carro.descricao }}.</p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Detalhes</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Denunciar</button>
+           <a class="btn btn-primary btn-lg" href="{% url 'detalhes' carro.id %}" title="">Detalhes</a>
+           <a class="btn btn-danger btn-lg" href="{% url 'detalhes' carro.id %}" title="">Denunciar</a>
           </div>
-          <small class="text-muted">9 mins</small>
+          <small class="text-muted">{{carro.user.username}}</small>
         </div>
       </div>
     </div>

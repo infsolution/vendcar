@@ -9,13 +9,17 @@
 {% for carro in user.meus_carros.all %}
   <div class="col-md-4">
     <div class="card mb-4 shadow-sm">
-      <img class="card-img-top" src="{{carro.foto}}" alt="Card image cap">
+      <img class="card-img-top" src="{{carro.foto}}" alt="{{carro.modelo}}">
       <div class="card-body">
-        <p class="card-text">{{ carro.modelo }}.</p>
+        <p class="card-text">{{ carro.descricao }}.</p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Detalhes</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Denunciar</button>
+            <a class="btn btn-primary btn-lg" href="{% url 'detalhes' carro.id %}">
+              Detalhes
+            </a>
+            <a class="btn btn-success btn-lg" href="{% url 'editar' carro.id %}">
+            Editar
+            </a>
           </div>
           <small class="text-muted">9 mins</small>
         </div>
@@ -24,7 +28,7 @@
   </div>  
 {% endfor %}  
 {% else %}
-<span>Não existem carros cadastrados.</span>
+<span>Você não tem carros cadastrados.</span>
 {% endif %}
 </div>
 </div>

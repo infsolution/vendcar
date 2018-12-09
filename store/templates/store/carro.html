@@ -1,0 +1,26 @@
+{% extends "store/base.html" %}
+{% block body %}
+
+<h1>Vendcar</h1>
+<strong><p>Aqui você vende seu carro.</p></strong>
+<h2>{{carro.modelo}}</h2>
+
+<div class="card mb-3">
+  <img class="card-img-top" src="{{carro.foto}}" alt="{{carro.modelo}}">
+  <div class="card-body">
+    <h5 class="card-title">{{carro.modelo}}</h5>
+    <p class="card-text">{{carro.descricao}}</p>
+    <div class="btn-group">
+    {% if carro.user.username != user.username %}
+		
+           <a class="btn btn-primary btn-lg" href="{% url 'comprar' carro.id %}" title="">COMPRAR</a>
+           <a class="btn btn-danger btn-lg" href="{% url 'detalhes' carro.id %}" title="">Denunciar</a>
+          
+    {% else %}
+		<a class="btn btn-success btn-lg" href="{% url 'editar' carro.id %}" title="">EDITAR</a>
+		<a class="btn btn-danger btn-lg" href="{% url 'apagar' carro.id %}" title="">APAGAR</a>
+    {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
