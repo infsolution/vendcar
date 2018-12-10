@@ -66,3 +66,17 @@ class AcessorioModelForm(forms.ModelForm):
         widgets={
              'nome':forms.TextInput(attrs={'class':'form-control', 'maxlength':255})
         }
+
+class VendaModelForm(forms.ModelForm):
+	class Meta:
+		model = Venda
+		fields = ['prazo_pagamento']
+		widgets ={
+			'prazo_pagamento':forms.DateInput(attrs={'class':'form-control', 'type':'date'})
+		}
+
+		error_messages = {
+	        'prazo_pagamento':{
+	        	'required':'Informe o prazo desejado!'
+	        },
+        }

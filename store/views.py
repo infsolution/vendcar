@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required 
 from django.core.files.storage import FileSystemStorage
+import datetime
 def index(request):
 	carros = Carro.objects.all()
 	return render(request,'store/index.html',{'carros':carros})
@@ -52,7 +53,7 @@ def get_perfil(request):
 @login_required(login_url='login')
 def add_car(request):
 	if request.method == 'POST':
-		form = CarroModelForm(request.POST, request.FILES)
+		#form = CarroModelForm(request.POST, request.FILES)
 		up_image = request.FILES['foto']
 		fs = FileSystemStorage()
 		name = fs.save(up_image.name, up_image)
@@ -80,7 +81,6 @@ def editar(request, carro_id):
 	carro = Carro.objects.get(id=carro_id)
 	if request.method == 'POST':
 		form = CarroModelForm(request.POST, instance=carro)
-		print(form)
 		if form.is_valid():
 			form.save()
 			return redirect('perfil')
@@ -103,3 +103,14 @@ def search(request):
 	search = request.GET['search']
 	carros = Carro.objects.filter(modelo__contains=search)
 	return render(request,'store/index.html',{'carros':carros})
+
+def venda(request, carro_id):
+	carro = Carro.objects.get(id=carro_id)
+	if request.method == 'POST':
+		venda = Venda(carro=carro, comprador=request.user,
+			prazo_pagamento=request.POST['prazo_pagamento'])
+		venda.save()
+		return redirect('comprar', carro_id)
+	else:
+		form = VendaModelForm()
+		return render(request,'store/venda.html',{'form':form, 'carro':carro})

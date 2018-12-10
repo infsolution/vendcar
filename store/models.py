@@ -27,3 +27,12 @@ class Carro(models.Model):
 	def __str__(self):
 		return self.modelo
 
+class Venda(models.Model):
+	carro = models.OneToOneField(Carro, on_delete = models.CASCADE,related_name='venda')
+	comprador = models.ForeignKey(User,on_delete = models.CASCADE, related_name='comprador')
+	concluida = models.BooleanField(default=False)
+	data_venda = models.DateField(auto_now_add=True)
+	prazo_pagamento = models.DateField(null=True, blank=True)
+	pagamento_ok = models.BooleanField(default=False)
+
+

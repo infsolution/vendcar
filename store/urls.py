@@ -15,6 +15,7 @@ urlpatterns = [
  	path('apagar/<int:carro_id>',views.apagar, name='apagar'),
  	path('comprar/<int:carro_id>', views.comprar, name='comprar'),
  	path('search/',views.search,name='search'),
+ 	path('venda/<int:carro_id>', views.venda, name='venda'),
 ]
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
