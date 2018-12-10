@@ -35,3 +35,8 @@ footer {
 footer p {
   margin-bottom: .25rem;
 }
+
+img{
+    max-width: 500px;
+    height: 100px;
+}

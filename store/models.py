@@ -23,7 +23,7 @@ class Carro(models.Model):
 	preco = models.FloatField(default=0)
 	data_do_anuncio = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 	foto = models.ImageField(null=True, blank=True, upload_to = 'media/')
-	acessorio = models.ManyToManyField(Acessorio)
+	acessorio = models.ManyToManyField(Acessorio,blank=True)
 	def __str__(self):
 		return self.modelo
 

@@ -15,14 +15,13 @@ def cadastro(request):
 	if request.method == 'POST':
 		if request.POST['password_um'] != request.POST['password']:
 			return render(request, 'store/cadastro.html', {'form':form, 'error_msg':'As senhas são diferentes!'})
-		else:
-			try:
-				user = User.objects.filter(email=request.POST['email'])[:1]
-				return render(request, 'store/cadastro.html', {'form':form, 'error_msg':'Já existe uma pessoa com o email '+request.POST['email']})
-			except User.DoesNotExist:
-				if form.is_valid():
-					form.save()
-				return redirect('/login')
+		try:
+			user = User.objects.get(email=request.POST['email'])
+			return render(request, 'store/cadastro.html', {'form':form, 'error_msg':'Já existe uma pessoa com o email '+request.POST['email']})
+		except User.DoesNotExist:
+			if form.is_valid():
+				form.save()
+			return redirect('/login')
 	else:
 		form = UserModelForm()
 		return render(request, 'store/cadastro.html', {'form':form})
@@ -40,7 +39,8 @@ def do_login(request):
 		if user is not None:
 			login(request,user)
 			return redirect('/', user)
-	return render(request, 'store/login.html',{'error_login':'Usuario ou senha invalidos!'})
+		return render(request, 'store/login.html',{'error_login':'Usuário ou senha inválidos'})
+	return render(request, 'store/login.html')
 
 def do_logout(request):
 	logout(request)
@@ -60,7 +60,8 @@ def add_car(request):
 		marca = Marca.objects.get(id=request.POST['marca'])
 		carro = Carro(marca = marca, user = request.user, modelo = request.POST['modelo'], 
 		ano_modelo = request.POST['ano_modelo'], ano_fabricacao = request.POST['ano_fabricacao'],
-		numero_de_portas = request.POST['numero_de_portas'], foto = url, descricao=request.POST['descricao'])
+		numero_de_portas = request.POST['numero_de_portas'], foto = url, 
+		descricao=request.POST['descricao'], preco=request.POST['preco'])
 		carro.save()
 		for acess in request.POST.getlist('acessorio'):
 			acs = Acessorio.objects.get(id=acess)
@@ -73,8 +74,8 @@ def add_car(request):
 def detalhes(request, carro_id):
 	carro = Carro.objects.get(id=carro_id)
 	return render(request, 'store/carro.html', {'carro':carro})
-@login_required(login_url='login')
 
+@login_required(login_url='login')
 def editar(request, carro_id):
 	carro = Carro.objects.get(id=carro_id)
 	if request.method == 'POST':
@@ -95,7 +96,8 @@ def apagar(request, carro_id):
 	return redirect('perfil')
 @login_required(login_url='login')
 def comprar(request, carro_id):
-	return render(request, 'store/compra.html')
+	carro = Carro.objects.get(id=carro_id)
+	return render(request, 'store/compra.html', {'carro':carro})
 
 def search(request):
 	search = request.GET['search']
