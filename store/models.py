@@ -7,6 +7,7 @@ class Marca(models.Model):
 	sigle = models.CharField(max_length=3)
 	def __str__(self):
 		return self.nome
+
 class Acessorio(models.Model):
 	nome = models.CharField(max_length=256)
 	def __str__(self):
@@ -34,5 +35,3 @@ class Venda(models.Model):
 	data_venda = models.DateField(auto_now_add=True)
 	prazo_pagamento = models.DateField(null=True, blank=True)
 	pagamento_ok = models.BooleanField(default=False)
-
-

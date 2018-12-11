@@ -6,8 +6,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required 
 from django.core.files.storage import FileSystemStorage
 import datetime
+
 def index(request):
-	carros = Carro.objects.all()
+	carros = Carro.objects.all().order_by('-data_do_anuncio')
 	return render(request,'store/index.html',{'carros':carros})
 
 def cadastro(request):
@@ -27,13 +28,6 @@ def cadastro(request):
 		form = UserModelForm()
 		return render(request, 'store/cadastro.html', {'form':form})
 
-def verifyUserName(nome):
-	user = User.objects.get(username=nome)
-	print(user.username)
-	#return user.username == nome
-
-
-
 def do_login(request):
 	if request.method == 'POST':
 		user = authenticate(username = request.POST['username'], password =  request.POST['password'])
@@ -50,6 +44,7 @@ def do_logout(request):
 @login_required(login_url='login')
 def get_perfil(request):
 	return render(request, 'store/perfil.html')
+
 @login_required(login_url='login')
 def add_car(request):
 	if request.method == 'POST':
@@ -74,7 +69,8 @@ def add_car(request):
 
 def detalhes(request, carro_id):
 	carro = Carro.objects.get(id=carro_id)
-	return render(request, 'store/carro.html', {'carro':carro})
+	sugestoes = Carro.objects.filter(descricao__contains=carro.modelo) | Carro.objects.filter(ano_fabricacao=carro.ano_fabricacao)
+	return render(request, 'store/carro.html', {'carro':carro, 'sugestoes':sugestoes})
 
 @login_required(login_url='login')
 def editar(request, carro_id):
@@ -94,6 +90,7 @@ def apagar(request, carro_id):
 	carro = Carro.objects.get(id=carro_id)
 	carro.delete()
 	return redirect('perfil')
+
 @login_required(login_url='login')
 def comprar(request, carro_id):
 	carro = Carro.objects.get(id=carro_id)
@@ -101,9 +98,11 @@ def comprar(request, carro_id):
 
 def search(request):
 	search = request.GET['search']
-	carros = Carro.objects.filter(modelo__contains=search)
-	return render(request,'store/index.html',{'carros':carros})
+	carros = Carro.objects.filter(modelo__contains=search) | Carro.objects.filter(descricao__contains=search)
+	sugestoes = Carro.objects.filter(ano_modelo__contains='20').order_by('data_do_anuncio')[:3]
+	return render(request,'store/index.html',{'carros':carros,'sugestoes':sugestoes})
 
+@login_required(login_url='login')
 def venda(request, carro_id):
 	carro = Carro.objects.get(id=carro_id)
 	if request.method == 'POST':
